@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:PATH_Editor"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+
     </Application.Resources>
 </Application>

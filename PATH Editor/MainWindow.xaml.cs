@@ -104,9 +104,24 @@ namespace PATH_Editor
             Application.Current.MainWindow.Height = Application.Current.MainWindow.Height + e.VerticalChange < 120f ? Application.Current.MainWindow.Height : Application.Current.MainWindow.Height + e.VerticalChange;
         }
 
-        private void listBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        
+        private void ListBoxItemTextBox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Console.WriteLine(listBox.ItemContainerStyle);
+            var textBox = (sender as TextBox);
+            textBox.Focusable = true;
+        }
+
+        private void ListBoxItemTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as TextBox).Focusable = false;
+        }
+
+        private void ListBoxItemTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                SaveEnviromentVariable();
+            }
         }
     }
 }
