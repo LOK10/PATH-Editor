@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PATH_Editor"
         mc:Ignorable="d"
-        Title="PATH" Height="350" Width="525" Background="#FF455A64" WindowStartupLocation="CenterScreen" BorderThickness="0" Foreground="#FF3F51B5" BorderBrush="#FF3F51B5" AllowsTransparency="True" WindowStyle="None">
+        Title="PATH" Height="350" Width="525" Background="#FF455A64" WindowStartupLocation="CenterScreen" BorderThickness="0"
+        Foreground="#FF3F51B5" BorderBrush="#FF3F51B5" AllowsTransparency="True" WindowStyle="None" Name="mainWondow">
     <Window.Resources>
 
         <SolidColorBrush x:Key="NormalBrush" Color="#FF546B76" />
@@ -153,7 +154,7 @@
             <ResizeGrip Opacity="0.75"/>
         </ControlTemplate>
 
-        <Style TargetType="{x:Type ScrollViewer}">
+        <Style x:Key="ScrollViewerTemplate" TargetType="{x:Type ScrollViewer}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ScrollViewer}">
@@ -177,10 +178,7 @@
             </Setter>
         </Style>
 
-        <ControlTemplate x:Key="LableToText" >
-            <TextBox />
-        </ControlTemplate>
-        
+
     </Window.Resources>
                                                 
     <Grid>
@@ -290,7 +288,19 @@
             </Button.Style>
         </Button>
 
-        <ListBox  Name="listBox" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0" Background="#FF455A64" Padding="0" Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" MouseDoubleClick="listBox_MouseDoubleClick" SelectionMode="Single">
+        <ListBox  Name="listBox" Grid.Row="2" Grid.ColumnSpan="2" BorderThickness="0" Background="#FF455A64" Padding="0" 
+                  Margin="0" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                  SelectionMode="Single" FocusManager.FocusedElement="{Binding ElementName=ListBoxItemTextBox}">
+            <ListBox.Template>
+                <ControlTemplate TargetType="ListBox">
+                    <Border BorderThickness="{TemplateBinding Border.BorderThickness}" Padding="{TemplateBinding Padding}" BorderBrush="{TemplateBinding Border.BorderBrush}" Background="{TemplateBinding Panel.Background}" SnapsToDevicePixels="True">
+                        <ScrollViewer Style="{StaticResource ScrollViewerTemplate}" Padding="{TemplateBinding Control.Padding}" Focusable="False">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>
+                </ControlTemplate>
+            </ListBox.Template>
+            
             <ListBox.ItemContainerStyle>
                 <Style TargetType="{x:Type ListBoxItem}">
                     <Setter Property="Background" Value="#FF455A64"/>
@@ -321,7 +331,37 @@
                     </Style.Triggers>
                 </Style>
             </ListBox.ItemContainerStyle>
+            
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBox Name="ListBoxItemTextBox" Text="{Binding Path=.}" HorizontalAlignment="Stretch" VerticalAlignment="Center" 
+                             VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled" LostFocus="ListBoxItemTextBox_LostFocus"
+                             MouseDoubleClick="ListBoxItemTextBox_MouseDoubleClick" Focusable="False" VerticalContentAlignment="Center" 
+                             KeyDown="ListBoxItemTextBox_KeyDown" AcceptsReturn="False" AcceptsTab="False" Cursor="Arrow" >
+                        <TextBox.Style>
+                            <Style x:Name="styleTB" TargetType="TextBox">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Width" Value="auto"/>
+                                <Setter Property="Height" Value="30"/>
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="BorderThickness" Value="0"/>
 
+                                <Style.Triggers>
+                                    <!--<Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#FF506874"/>
+                                    </Trigger>-->
+                                    <Trigger Property="Control.IsFocused" Value="True">
+                                        <Setter Property="Background" Value="#ff37474F"/>
+                                    </Trigger>
+                                </Style.Triggers>
+
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
 
     </Grid>
