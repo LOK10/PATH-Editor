@@ -1,5 +1,5 @@
 # <img src="PATH Editor/PathLogo.ico" alt="Labels Logo" Height="30"/> PATH Editor
-This app that lets you to edit a Windows PATH enviroment variable.
+This app lets you to edit a Windows PATH enviroment variable.
 ##
 <p align="center">
 	<img src="screen_shoot.png" alt="path editor programm screenshoot" /><br /><br />
